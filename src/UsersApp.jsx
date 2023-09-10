@@ -1,44 +1,30 @@
-import UserForm from "./components/UserForm";
-import UsersList from "./components/UsersList";
-import {useUsers} from "./hooks/useUsers";
-
-
-
+import React from "react";
+import UsersPage from "./pages/UsersPage";
+import LoginPages from "./auth/pages/LoginPages";
+import Navbar from "./components/layout/Navbar";
+import { useAuth } from "./auth/hooks/useAuth";
+import { Navigate, Route, Routes } from "react-router-dom";
+import UserRoutes from "./routes/UserRoutes";
 
 const UsersApp = () => {
-
-  const {initialUser, users, userSelected, visibleForm, handleAddUser, handleDeleteUser, handleUpdateUser, handlerModalClose, handlerModalOpen} = useUsers();
   
-
+  const { login, handlerLogin, handlerLogout } = useAuth(); 
+  
   return (
-    <div className="container my-4">
-      <h2 className="text-center text-primary">Users App</h2>
-
-      <div className="row my-4">
-        {!visibleForm ||
-          <div className="col my-2">
-            <UserForm handleAddUser={handleAddUser} initialUser={initialUser} userSelected={userSelected} handlerModalClose={ handlerModalClose} />
-          </div>}
-        
-        <div className="col my-2">
-          {visibleForm ||
-            <button className="btn btn-primary my-4" onClick={handlerModalOpen}
-            >
-              Add User
-            </button>
-          }
-          { 
-            users.length > 0 ? (
-              <UsersList users={users} handleDeleteUser={handleDeleteUser} handleUpdateUser={ handleUpdateUser} />
-            ) : (
-              <div className="alert alert-warning">No hay usuarios en el sistemas</div>
-            )
-          }
-          
-        </div>
-      </div>
-
-    </div>
+    <Routes>
+      { login.isAuthenticated
+          ?
+          (
+            <>
+            <Route path="/*" element={<UserRoutes login={login} handlerLogout={handlerLogout} />} />
+            
+            </>
+          )
+        : <>
+          <Route path="/login" element={<LoginPages handlerLogin={handlerLogin} />} />
+          <Route path="/*" element={<Navigate to="/login"/>} />
+          </> }  
+    </Routes>
   );
 };
 

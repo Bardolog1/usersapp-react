@@ -111,11 +111,11 @@ const UserForm = ({ handleAddUser, initialUser, userSelected, handlerModalClose 
           </div>}
           <input type="hidden" name="id" value={id} />
           <input type="hidden" name="date" value={date} />
-          <div className="mb-3">  
-              <button type="submit" className="btn btn-primary">
+          <div className="mb-3 w-100 ">  
+              <button type="submit" className="btn btn-primary ">
                   {id>0 ? "Update" : "Create"}
               </button>
-               <button type="button" className="btn btn-danger" onClick={cancelOP}>
+               <button type="button" className="btn btn-danger mx-3" onClick={cancelOP}>
                   Cancel
               </button>
           </div>

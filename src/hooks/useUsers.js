@@ -2,6 +2,7 @@ import { userReducer } from "../reducer/userReducer";
 import { ADD_USER, DELETE_USER, UPDATE_USER } from "../reducer/userActions";
 import { useReducer, useState } from "react";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -26,7 +27,7 @@ const initialUsers = [
   },
 ];
 
-const initialUser = {
+const initialUser = JSON.parse(sessionStorage.getItem("users")) ||{
   id: 0,
   name: "",
   lastname: "",
@@ -35,12 +36,14 @@ const initialUser = {
   date: ""
 }
 
-const sessionDataUsers = JSON.parse(sessionStorage.getItem("users"));
+
 
 export const useUsers = () => {
   const [users, dispatch] = useReducer(userReducer, initialUsers);
   const [userSelected, setUserSelected] = useState(initialUser);
   const [visibleForm, setVisibleForm] = useState(false);
+  const navigate = useNavigate();
+  
 
   const handleAddUser = (user) => {
 
@@ -57,6 +60,7 @@ export const useUsers = () => {
     )
     setVisibleForm(false);
     setUserSelected(initialUser);
+    navigate("/users");
   }
 
   const handleDeleteUser = (id) => {
