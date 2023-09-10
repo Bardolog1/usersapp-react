@@ -115,9 +115,24 @@ const UserForm = ({ handleAddUser, initialUser, userSelected, handlerModalClose 
               <button type="submit" className="btn btn-primary ">
                   {id>0 ? "Update" : "Create"}
               </button>
-               <button type="button" className="btn btn-danger mx-3" onClick={cancelOP}>
-                  Cancel
-              </button>
+
+              {
+                handlerModalClose ?
+                    (
+                        <button type="button" className="btn btn-danger mx-3" onClick={cancelOP}>
+                            Cancel
+                        </button>
+                    )
+                    :
+                    (
+                        <button type="button" className="btn btn-warning mx-3" onClick={(e) => {
+                            e.preventDefault();
+                            setUserForm(initialUser);
+                        }}>
+                            Limpiar
+                        </button>
+                    )
+              }
           </div>
           
 

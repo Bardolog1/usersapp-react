@@ -1,19 +1,16 @@
 import LoginPages from "../auth/pages/LoginPages";
 import UserModalForm from "../components/UserModalForm";
 import UsersList from "../components/UsersList";
-import {useUsers} from "../hooks/useUsers";
 
 
 
 
-const UsersPage = () => {
+const UsersPage = ({initialUser, users, userSelected, visibleForm, handleAddUser, handleDeleteUser, handleUpdateUser, handlerModalClose, handlerModalOpen, handlerChgPws}) => {
 
-  const {initialUser, users, userSelected, visibleForm, handleAddUser, handleDeleteUser, handleUpdateUser, handlerModalClose, handlerModalOpen} = useUsers();
   
 
   return (
     <>
-     
       { !visibleForm ||
         <UserModalForm userSelected={userSelected} handleAddUser={handleAddUser} initialUser={initialUser} handlerModalClose={handlerModalClose} />
       }
@@ -25,7 +22,7 @@ const UsersPage = () => {
             <button className="btn btn-primary my-4" onClick={handlerModalOpen}>Add User</button>
             { 
               users.length > 0 ? (
-                <UsersList users={users} handleDeleteUser={handleDeleteUser} handleUpdateUser={ handleUpdateUser} />
+                <UsersList users={users} handleDeleteUser={handleDeleteUser} handleUpdateUser={handleUpdateUser} handlerChgPws={ handlerChgPws} />
               ) : (
                 <div className="alert alert-warning">No hay usuarios en el sistemas</div>
               )

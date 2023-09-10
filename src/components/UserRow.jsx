@@ -1,5 +1,8 @@
+import { NavLink, useNavigate } from "react-router-dom";
 
-const UserRow = ({ handleDeleteUser, handleUpdateUser, id ,name,lastname, email  }) => {
+const UserRow = ({ handleDeleteUser, handleUpdateUser, id, name, lastname, email  }) => {
+    
+    const navigate = useNavigate();
 
     const deleteUser = (e) => {
         e.preventDefault();
@@ -22,8 +25,11 @@ const UserRow = ({ handleDeleteUser, handleUpdateUser, id ,name,lastname, email 
 
     }
 
+
+
   return (
     <tr>
+        <td>{id}</td>
         <td>{name}</td>
         <td>{lastname}</td>
         <td>{email}</td>
@@ -34,14 +40,22 @@ const UserRow = ({ handleDeleteUser, handleUpdateUser, id ,name,lastname, email 
             <button type="button" className="btn btn-info dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
                 <span className="visually-hidden">Toggle Dropdown</span>
             </button>
-            <ul className="dropdown-menu">
-                <li className=" dropdown-item">
+                <ul className="dropdown-menu">
+                  <li className=" dropdown-item">
                     <button
-                        className="btn btn-sm btn-outline-primary text-center mx-1 w-100"
+                        className="btn btn-sm btn-outline-success text-center mx-1 w-100"
                         type="button"
                         onClick={updateUser}
                     >Update
                     </button>
+                </li>
+                    
+                <li><hr className="dropdown-divider" /></li>
+                <li className=" dropdown-item">
+                          <NavLink className="btn btn-sm btn-outline-primary text-center mx-1 w-100"
+                              to={"/pwschg/"+id}
+                          >Change Password</NavLink>
+
                 </li>
                     
                 <li><hr className="dropdown-divider" /></li>

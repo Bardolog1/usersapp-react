@@ -2,10 +2,12 @@ import React from "react";
 import UserRow from "./UserRow";
 
 const UsersList = ({ users, handleDeleteUser, handleUpdateUser }) => {
+
   return (
     <table className="table table-hover">
       <thead>
         <tr>
+          <th>id</th>
           <th>Name</th>
           <th>Lastname</th>
           <th>Email</th>
@@ -22,7 +24,8 @@ const UsersList = ({ users, handleDeleteUser, handleUpdateUser }) => {
             key={user.id}
             id={user.id}
             handleDeleteUser={handleDeleteUser}
-            handleUpdateUser={handleUpdateUser} />
+            handleUpdateUser={handleUpdateUser}
+          />
         ))}
       </tbody>
     </table>

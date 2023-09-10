@@ -1,4 +1,4 @@
-import { ADD_USER, DELETE_USER, UPDATE_USER } from "./userActions";
+import { ADD_USER, DELETE_USER, UPDATE_USER,UPDATE_PWS_USER } from "./userActions";
 
 
 export const userReducer = (state = [], action) => {
@@ -20,6 +20,24 @@ export const userReducer = (state = [], action) => {
                 password: user.password,
                 date: new Date().toLocaleString()
             } : user);
+        
+        case UPDATE_PWS_USER: 
+            
+            return state.map((user) => {
+                if (user.id === action.payload.id) {
+                    if (user.password === action.payload.passwordOld) {
+
+                        return {
+                            ...user,
+                            password: action.payload.passwordNew,
+                            date: new Date().toLocaleString()
+                        }
+                    }
+                }
+                return user;            }
+            );
+        
+               
         default:
             return state;
     }

@@ -15,7 +15,7 @@ const Navbar = ({login,  handlerLogout }) => {
               <NavLink className="nav-link text-bg-dark"  to="/users">Users</NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link text-bg-dark"  to="/users">Registrar</NavLink>
+              <NavLink className="nav-link text-bg-dark"  to="/register">Registrar</NavLink>
             </li>
           </ul>
         </div>

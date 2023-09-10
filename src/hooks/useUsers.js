@@ -1,5 +1,5 @@
 import { userReducer } from "../reducer/userReducer";
-import { ADD_USER, DELETE_USER, UPDATE_USER } from "../reducer/userActions";
+import { ADD_USER, DELETE_USER, UPDATE_USER, UPDATE_PWS_USER } from "../reducer/userActions";
 import { useReducer, useState } from "react";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 
 
-const initialUsers = [
+const initialUsers = JSON.parse(sessionStorage.getItem("users")) || [
   {
     id: 1,
     name: "John",
@@ -27,13 +27,20 @@ const initialUsers = [
   },
 ];
 
-const initialUser = JSON.parse(sessionStorage.getItem("users")) ||{
+const initialUser= {
   id: 0,
   name: "",
   lastname: "",
   email: "",
   password: "",
   date: ""
+}
+
+const initialPWS = {
+  id: 0,
+  passwordOld: "",
+  passwordNew: "",
+  passwordNew2: ""
 }
 
 
@@ -103,9 +110,59 @@ export const useUsers = () => {
     setVisibleForm(true);
   }
 
+  const handleChgPws = ({ id, passwordOld, passwordNew, passwordNew2 }) => {
+    
+    if (passwordNew.trim() !== passwordNew2.trim()) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Las contraseñas no coinciden!',
+        footer: '<a href>Why do I have this issue?</a>'
+      })
+      return;
+    } 
+
+      const us = users.find((us) => us.id === Number(id));
+
+      if (us === undefined) {
+        Swal.fire({
+          icon: 'info',
+          title: 'Oops...',
+          text: 'El usuario no existe!',
+          
+        })
+        return;
+      }
+
+      if (us.password !== passwordOld) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'La contraseña actual no coincide!',
+          footer: '<a href>Why do I have this issue?</a>'
+        })
+        return;
+      }
+
+      dispatch({
+        type: UPDATE_PWS_USER,
+        payload: {id: Number(id), passwordOld, passwordNew }
+      });
+    
+      Swal.fire({
+        icon: 'success',
+        title: 'Contraseña Actualizada!',
+        showConfirmButton: false,
+        timer: 1500
+      })
+      navigate("/users");
+    
+  }
+
 
   return {
     initialUser,
+    initialPWS,
     users,
     userSelected,
     visibleForm,
@@ -113,7 +170,8 @@ export const useUsers = () => {
     handleDeleteUser,
     handleUpdateUser,
     handlerModalClose,
-    handlerModalOpen
+    handlerModalOpen,
+    handleChgPws
 
 
   };
