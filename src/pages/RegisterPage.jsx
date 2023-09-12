@@ -1,7 +1,10 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import UserForm from '../components/UserForm'
+import { UserContext } from '../context/UserContext';
 
-const RegisterPage = ({ handleAddUser, initialUser }) => {
+const RegisterPage = () => {
+
+    const { initialUser } = useContext(UserContext);
 
     const [userSelected, setUserSelected] = useState(initialUser);
 
@@ -11,7 +14,7 @@ const RegisterPage = ({ handleAddUser, initialUser }) => {
           >Register Page</h4>
           <div className="row justify-content-center my-5">
               <div className="col-md-6">
-                  <UserForm userSelected={userSelected} handleAddUser={handleAddUser} initialUser={initialUser}/>
+                  <UserForm userSelected={userSelected} />
               </div>
           </div>
         </div>

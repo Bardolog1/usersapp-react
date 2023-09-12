@@ -1,13 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Swal from "sweetalert2";
+import { messages, types }  from "./static/helpers/defaultMessages"
+import { UserContext } from "../context/UserContext";
 
-const PasswordForm = ({ idUser, initialPWS, handleChgPws }) => {
+const PasswordForm = ({ idUser }) => {
+
+  const {initialPWS, handleChgPws} = useContext(UserContext);
   const [form, setForm] = useState(initialPWS);
   const { id, passwordOld, passwordNew, passwordNew2 } = form;
     const [validPWS, setValidPWS] = useState(false);
   const [validPWS2, setValidPWS2] = useState(false);
     const [validOldPWS, setValidOldPWS] = useState(false);
-    const [validationMessage, setValidationMessage] = useState({message:'Ingresa una contraseña valida',type:'danger'});
+  const [validationMessage, setValidationMessage] = useState({
+    message: messages.NO_IS_VALID
+    , type: types.DANGER
+  });
     
 
 
@@ -29,30 +36,30 @@ const PasswordForm = ({ idUser, initialPWS, handleChgPws }) => {
             if (value.length >= 8) {
                 if (value.match(/[a-z]/g) && value.match(/[A-Z]/g) && value.match(/[0-9]/g) && value.match(/[^a-zA-Z\d]/g)) {
                     name === 'passwordNew' ? setValidPWS(true) : setValidPWS2(true);
-                    setValidationMessage({ message: 'Contraseña válida', type: 'success' });
+                    setValidationMessage({ message: messages.IS_VALIDA, type: types.SUCCESS });
                 } else {
                     name === 'passwordNew' ? setValidPWS(false) : setValidPWS2(false);
-                    setValidationMessage({ message: 'La contraseña debe contener al menos una letra minúscula, una letra mayúscula, un número y un carácter especial.', type: 'danger' });
+                    setValidationMessage({ message: messages.REQUISITOS_MSG, type: types.DANGER });
                 }
             } else {
                 name === 'passwordNew' ? setValidPWS(false) : setValidPWS2(false);
-                setValidationMessage({ message: 'La contraseña debe tener al menos 8 caracteres.', type: 'danger' });
+                setValidationMessage({ message: messages.MINIMO_CARACTER, type: types.DANGER });
             }
     
             if (name === 'passwordNew2') {
                 if (value === passwordNew) {
                     setValidPWS2(true);
-                    setValidationMessage({ message: 'Las contraseñas coinciden.', type: 'success' });
+                    setValidationMessage({ message: messages.COINCIDEN_MSG, type: types.SUCCESS });
                 } else {
                     setValidPWS2(false);
-                    setValidationMessage({ message: 'Las contraseñas no coinciden.', type: 'danger' });
+                    setValidationMessage({ message: messages.NO_COINCIDEN_MSG, type: types.DANGER });
                 }
             }
         
             if (passwordOld === passwordNew) {
                 setValidPWS(false);
                 setValidPWS2(false);
-                setValidationMessage({ message: 'La contraseña nueva debe ser diferente a la anterior.', type: 'danger' });
+                setValidationMessage({ message: messages.NO_OLD_PASS, type: types.DANGER});
             }
         
         }

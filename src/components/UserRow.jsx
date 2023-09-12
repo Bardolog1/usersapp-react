@@ -1,7 +1,10 @@
+import { useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { UserContext } from "../context/UserContext";
 
-const UserRow = ({ handleDeleteUser, handleUpdateUser, id, name, lastname, email  }) => {
+const UserRow = ({ id, name, lastname, email  }) => {
     
+    const { handleDeleteUser, handleUpdateUser } = useContext(UserContext);   
     const navigate = useNavigate();
 
     const deleteUser = (e) => {

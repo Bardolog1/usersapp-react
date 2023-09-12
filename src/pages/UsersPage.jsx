@@ -1,18 +1,19 @@
-import LoginPages from "../auth/pages/LoginPages";
+import { useContext } from "react";
 import UserModalForm from "../components/UserModalForm";
 import UsersList from "../components/UsersList";
+import { UserContext } from "../context/UserContext";
 
 
 
 
-const UsersPage = ({initialUser, users, userSelected, visibleForm, handleAddUser, handleDeleteUser, handleUpdateUser, handlerModalClose, handlerModalOpen, handlerChgPws}) => {
+const UsersPage = () => {
 
-  
+  const { users,  visibleForm, handlerModalOpen} = useContext(UserContext);
 
   return (
     <>
       { !visibleForm ||
-        <UserModalForm userSelected={userSelected} handleAddUser={handleAddUser} initialUser={initialUser} handlerModalClose={handlerModalClose} />
+        <UserModalForm />
       }
 
     <div className="container my-4">
@@ -22,7 +23,7 @@ const UsersPage = ({initialUser, users, userSelected, visibleForm, handleAddUser
             <button className="btn btn-primary my-4" onClick={handlerModalOpen}>Add User</button>
             { 
               users.length > 0 ? (
-                <UsersList users={users} handleDeleteUser={handleDeleteUser} handleUpdateUser={handleUpdateUser} handlerChgPws={ handlerChgPws} />
+                <UsersList />
               ) : (
                 <div className="alert alert-warning">No hay usuarios en el sistemas</div>
               )

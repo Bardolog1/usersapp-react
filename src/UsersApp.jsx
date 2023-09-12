@@ -1,30 +1,30 @@
-import React from "react";
-import UsersPage from "./pages/UsersPage";
+import React, {useContext} from "react";
 import LoginPages from "./auth/pages/LoginPages";
-import Navbar from "./components/layout/Navbar";
-import { useAuth } from "./auth/hooks/useAuth";
 import { Navigate, Route, Routes } from "react-router-dom";
 import UserRoutes from "./routes/UserRoutes";
+import { AuthContext } from "./auth/context/AuthContext";
 
 const UsersApp = () => {
   
-  const { login, handlerLogin, handlerLogout } = useAuth(); 
+  const { login } = useContext(AuthContext);
   
   return (
+    
     <Routes>
       { login.isAuthenticated
           ?
           (
             <>
-            <Route path="/*" element={<UserRoutes login={login} handlerLogout={handlerLogout} />} />
+            <Route path="/*" element={<UserRoutes/>} />
             
             </>
           )
         : <>
-          <Route path="/login" element={<LoginPages handlerLogin={handlerLogin} />} />
+          <Route path="/login" element={<LoginPages/>} />
           <Route path="/*" element={<Navigate to="/login"/>} />
           </> }  
-    </Routes>
+      </Routes>
+    
   );
 };
 

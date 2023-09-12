@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import UserRow from "./UserRow";
+import { UserContext } from "../context/UserContext";
 
-const UsersList = ({ users, handleDeleteUser, handleUpdateUser }) => {
+const UsersList = () => {
+
+  const { users } = useContext(UserContext);
 
   return (
     <table className="table table-hover">
@@ -23,8 +26,7 @@ const UsersList = ({ users, handleDeleteUser, handleUpdateUser }) => {
             email={user.email}
             key={user.id}
             id={user.id}
-            handleDeleteUser={handleDeleteUser}
-            handleUpdateUser={handleUpdateUser}
+            
           />
         ))}
       </tbody>
