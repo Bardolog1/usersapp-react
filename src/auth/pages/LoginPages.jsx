@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import  { useContext, useState } from "react";
 import Swal from "sweetalert2";
 import { AuthContext } from "../context/AuthContext";
 
@@ -20,6 +20,8 @@ const LoginPages = () => {
             [name]: value,
         });
     };
+    
+   
 
     const onInit = (e) => {
         e.preventDefault();

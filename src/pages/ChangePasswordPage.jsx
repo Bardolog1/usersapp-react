@@ -1,4 +1,3 @@
-import React from 'react'
 import PasswordForm from '../components/PasswordForm'
 import { useParams } from 'react-router-dom'
 
